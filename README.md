@@ -144,4 +144,37 @@ winrm                          Run tasks over Microsoft's WinRM
 ```
 _________________________________________________
 10. В prod.yml добавьте новую группу хостов с именем local, в ней разместите localhost с необходимым типом подключения.
+```
+➜  playbook git:(master) ✗ cat inventory/prod.yml 
+---
+  el:
+    hosts:
+      centos7:
+        ansible_connection: docker
+  deb:
+    hosts:
+      ubuntu:
+        ansible_connection: docker
+  loc:
+    hosts:
+      localhost:
+        ansible_connection: local
+```
+_________________________________________________
+11. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь что факты some_fact для каждого из хостов определены из верных group_vars.
+```
+➜  playbook git:(master) ✗ ansible-playbook -i inventory/prod.yml site.yml --ask-vault-password
+Vault password: 
+TASK [Print fact] ****************************************************************************************************************************************************************************************************************
+ok: [centos7] => {
+    "msg": "el default fact"
+}
+ok: [ubuntu] => {
+    "msg": "deb default fact"
+}
+ok: [localhost] => {
+    "msg": "all default fact"
+}
+```
+__________________________________________________
  
