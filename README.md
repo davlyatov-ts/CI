@@ -24,5 +24,24 @@ ok: [localhost] => {
     "msg": "all default fact"
 }
 ```
-____________________________________________
+___________________________________________
+3. Воспользуйтесь подготовленным (используется docker) или создайте собственное окружение для проведения дальнейших испытаний.
+```
+➜  playbook git:(master) ✗ docker ps
+CONTAINER ID   IMAGE      COMMAND          CREATED          STATUS          PORTS     NAMES
+ae0ff81b81d7   ubuntu     "sleep 666666"   9 seconds ago    Up 6 seconds              ubuntu
+44d83dbf1c19   centos:7   "sleep 666666"   52 seconds ago   Up 49 seconds             cenros7
+```
+4. Проведите запуск playbook на окружении из prod.yml. Зафиксируйте полученные значения some_fact для каждого из managed host
+```
+➜  playbook git:(master) ✗ ansible-playbook -i inventory/prod.yml site.yml
+TASK [Print fact] ****************************************************************************************************************************************************************************************************************
+ok: [centos7] => {
+    "msg": "el"
+}
+ok: [ubuntu] => {
+    "msg": "deb"
+}
+```
+
   
